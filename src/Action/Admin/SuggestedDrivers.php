@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Domain\User\Entity\User;
 
 
-[#AsController]
+#[AsController]
 final class SuggestedDrivers extends AbstractController
 {
     #[Route(

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-[#AsController]
+#[AsController]
 final class ActivityLogs extends AbstractController
 {
     #[Route(
