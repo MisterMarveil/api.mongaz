@@ -12,7 +12,7 @@ use App\Domain\User\Entity\User;
 use App\Domain\User\Entity\DriverProfile;
 
 
-[#AsController]
+#[AsController]
 final class CancelDelivery extends AbstractController
 {
     #[Route(

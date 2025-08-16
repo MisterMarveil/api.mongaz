@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-[#AsController]
+#[AsController]
 final class StartDelivery extends AbstractController
 {
     #[Route(

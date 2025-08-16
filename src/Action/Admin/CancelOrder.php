@@ -10,7 +10,7 @@ use App\Domain\Order\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-[#AsController]
+#[AsController]
 final class CancelOrder extends AbstractController
 {
     #[Route(

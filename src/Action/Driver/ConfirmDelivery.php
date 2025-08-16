@@ -12,7 +12,7 @@ use App\Domain\User\Entity\DriverProfile;
 
 
 
-[#AsController]
+#[AsController]
 final class ConfirmDelivery extends AbstractController
 {
     #[Route(
