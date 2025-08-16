@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Infrastructure\Security;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
