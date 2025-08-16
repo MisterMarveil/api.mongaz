@@ -11,7 +11,6 @@ use App\Domain\User\Entity\User;
 use App\Domain\User\Entity\DriverProfile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Attribute\AsController;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[AsController]
 final class AcceptOrder extends AbstractController
