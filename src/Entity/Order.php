@@ -1,5 +1,5 @@
 <?php
-namespace App\Domain\Order\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Domain\User\Entity\DriverProfile;
-use App\Domain\User\Entity\User;
+use App\Entity\DriverProfile;
+use App\Entity\User;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\OpenApi\Model;

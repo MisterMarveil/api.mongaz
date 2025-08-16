@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Domain\Order\Entity\OrderItem;
+use App\Entity\OrderItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Security;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
-use App\Domain\User\Entity\User;
+use App\Entity\User;
 
 class AuthenticationSuccessListener
 {

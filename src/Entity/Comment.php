@@ -1,12 +1,12 @@
 <?php
-namespace App\Domain\Comment\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
-use App\Domain\User\Entity\User;
-use App\Domain\Order\Entity\Order;
+use App\Entity\User;
+use App\Entity\Order;
 use App\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]

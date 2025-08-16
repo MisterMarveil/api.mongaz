@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Domain\User\Entity\DriverProfile;
+use App\Entity\DriverProfile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

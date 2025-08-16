@@ -1,5 +1,5 @@
 <?php
-namespace App\Domain\Order\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;

@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Domain\Comment\Entity\Comment;
+use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Domain\Pos\Entity\PointOfSale;
+use App\Entity\PointOfSale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

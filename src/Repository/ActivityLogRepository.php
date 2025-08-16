@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 
-use App\Domain\Activity\Entity\ActivityLog;
+use App\Entity\ActivityLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Domain\Order\Entity\Order;
+use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 
 

@@ -6,9 +6,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Domain\Order\Entity\Order;
-use App\Domain\User\Entity\User;
-use App\Domain\User\Entity\DriverProfile;
+use App\Entity\Order;
+use App\Entity\User;
+use App\Entity\DriverProfile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 

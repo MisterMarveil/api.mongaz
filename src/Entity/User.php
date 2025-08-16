@@ -1,5 +1,5 @@
 <?php
-namespace App\Domain\User\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
