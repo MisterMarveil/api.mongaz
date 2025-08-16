@@ -7,4 +7,4 @@ framework:
         accept_order:
             policy: 'token_bucket'
             limit: 10
-        rate: { interval: '1 minute', amount: 10 }
+            rate: { interval: '1 minute', amount: 10 }
