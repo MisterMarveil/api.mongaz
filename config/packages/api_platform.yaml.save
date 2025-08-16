@@ -1,0 +1,14 @@
+api_platform:
+    title: MONGAZ API
+    version: 1.0.0
+    defaults:
+        pagination_items_per_page: 20
+        normalization_context: { groups: ['read'] }
+        denormalization_context: { groups: ['write'] }
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+    swagger:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']

@@ -1,0 +1,4 @@
+api_doc:
+    path: /docs
+    methods: [GET]
+    controller: api_platform.swagger.action.ui

@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Infrastructure\Security;
+
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use App\Domain\User\Entity\User;
+
+class AuthenticationSuccessListener
+{
+    public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event): void
+    {
+        $data = $event->getData();
+        $user = $event->getUser();
+
+        if (!$user instanceof User) {
+            return;
+        }
+
+        $data['user'] = [
+            'id' => (string) $user->getId(),
+            'phone' => $user->getPhone(),
+            'name' => $user->getName(),
+            'roles' => $user->getRoles(),
+        ];
+
+        $event->setData($data);
+    }
+}

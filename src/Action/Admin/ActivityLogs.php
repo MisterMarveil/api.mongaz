@@ -1,0 +1,34 @@
+<?php
+namespace App\Action\Admin;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use App\Domain\Order\Entity\Order;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
+
+
+[#AsController]
+final class ActivityLogs extends AbstractController
+{
+    #[Route(
+        name: 'admin_activity_logs',
+        path: '/api/admin/activity-logs',
+        methods: ['GET'],
+        defaults: [
+            '_api_resource_class' => Order::class,
+            '_api_operation_name' => 'admin_activity_logs',
+        ]
+    )]
+    public function __invoke(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $driverId = $request->query->get('driver_id');
+        $period   = $request->query->get('period');
+
+        $logs = $em->getRepository(Order::class)->findLogsForDriver($driverId, $period);
+
+        return new JsonResponse(['logs' => $logs]);
+    }
+}
