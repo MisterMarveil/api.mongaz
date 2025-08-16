@@ -20,4 +20,8 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Infrastructure\Security\AuthenticationSuccessListener:
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success }
+            - { 
+                name: kernel.event_listener, 
+                event: lexik_jwt_authentication.on_authentication_success,
+                method: onAuthenticationSuccessResponse  # Explicit method name
+            }
