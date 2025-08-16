@@ -49,7 +49,7 @@ use App\Repository\OrderRepository;
                     '200' => new Model\Response(description: 'Driver assigned'),
                     '404' => new Model\Response(description: 'Order or driver not found')
                 ]
-            )
+                ),
             security: "is_granted('ROLE_ADMIN')"
         ),
         new Post(
