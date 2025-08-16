@@ -9,8 +9,8 @@ use ApiPlatform\OpenApi\Model;
     operations: [
         new Get(
             name: 'system_health',
-            uriTemplate: '/_health',
-            controller: App\Action\System\HealthCheck::class,
+            uriTemplate: '/_health',            
+            routeName: 'system_health', 
             openapi: new Model\Operation(
                 summary: 'Health check',
                 description: 'Returns API health status.',
