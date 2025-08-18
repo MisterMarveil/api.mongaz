@@ -18,6 +18,8 @@ use ApiPlatform\OpenApi\Model;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
+    openapiContext: ['security' => [['JWT' => []]]],
+    security: "is_granted('ROLE_USER')",
     operations: [
          new Post(
             name: 'password_reset_request', 

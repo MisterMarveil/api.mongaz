@@ -10,7 +10,9 @@ use App\Repository\PointOfSaleRepository;
 #[ORM\Entity(repositoryClass: PointOfSaleRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['pos:read']],
-    denormalizationContext: ['groups' => ['pos:write']]
+    denormalizationContext: ['groups' => ['pos:write']],
+    openapiContext: ['security' => [['JWT' => []]]],
+    security: "is_granted('ROLE_ADMIN')"
 )]
 class PointOfSale
 {

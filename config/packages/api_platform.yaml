@@ -13,12 +13,10 @@ api_platform:
     # Expose JWT as a security scheme
     swagger:
         versions: [3]
-        components:
-            securitySchemes:
-                bearerAuth:
-                    type: http
-                    scheme: bearer
-                    bearerFormat: JWT        
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header  
     swagger_ui_extra_configuration:
         persistAuthorization: true  # keeps token in Swagger UI
     openapi:

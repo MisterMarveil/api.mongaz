@@ -25,7 +25,8 @@ use App\Repository\OrderRepository;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ApiResource(
-   operations: [
+    openapiContext: ['security' => [['JWT' => []]]],    
+    operations: [
         new Post(
             name: 'admin_assign_driver',
             uriTemplate: '/admin/orders/{id}/assign-driver',

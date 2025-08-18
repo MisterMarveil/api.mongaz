@@ -8,7 +8,10 @@ use Symfony\Component\Uid\Uuid;
 use App\Repository\OrderItemRepository;
 
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    openapiContext: ['security' => [['JWT' => []]]],
+    security: "is_granted('ROLE_USER')"
+)]
 class OrderItem
 {
     #[ORM\Id]

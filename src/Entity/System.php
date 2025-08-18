@@ -8,6 +8,8 @@ use ApiPlatform\OpenApi\Model;
 
 
 #[ApiResource(
+    openapiContext: ['security' => [['JWT' => []]]],
+    security: "is_granted('ROLE_USER')",
     operations: [
         new Get(
             name: 'system_health',
