@@ -36,8 +36,8 @@ use ApiPlatform\OpenApi\Model;
         ),
         new Get(
             name: 'system_webhook_get',
-            routeName: 'system_webhook',
-            uriTemplate: '/system/webhook',
+            routeName: 'system_webhook_get',
+            uriTemplate: '/api/system/webhook',
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Verification",
@@ -77,8 +77,8 @@ use ApiPlatform\OpenApi\Model;
         ),
         new Post(
             name: 'system_webhook_post',
-            routeName: 'system_webhook',
-            uriTemplate: '/system/webhook',
+            routeName: 'system_webhook_post',
+            uriTemplate: '/api/system/webhook',
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Receiver",
