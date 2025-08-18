@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 final class WebhookGetAction
 {
     #[Route(
-        path: '/api/system/webhook',
+        path: '/api/system/webhook1',
         name: 'system_webhook_get',
         methods: ['GET'],
         defaults: [
