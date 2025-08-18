@@ -148,8 +148,8 @@ use App\Repository\OrderRepository;
                 summary: 'Driver activity logs',
                 description: 'Fetch activity logs for drivers within a period.',
                 parameters: [
-                    ['name' => 'driver_id', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'integer']],
-                    ['name' => 'period', 'in' => 'query', 'required' => false, 'schema' => ['type' => 'string']]
+                    ['name' => 'driver_id', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'integer'], 'example' => '2025-01-01'],
+                    ['name' => 'period', 'in' => 'query', 'required' => false, 'schema' => ['type' => 'string'], 'example' => '2025-01-01']
                 ],
                 responses: [
                     '200' => new Model\Response(description: 'Logs retrieved'),
