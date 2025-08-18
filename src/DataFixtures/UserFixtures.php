@@ -18,10 +18,8 @@ class UserFixtures extends Fixture
         // --- Admin User ---
         $admin = new User();
         $admin->setPhone('+237690000001')
-              ->setFirstName('System')
-              ->setLastName('Admin')
+              ->setName('System Admin')              
               ->setRoles(['ROLE_ADMIN'])
-              ->setIsEnabled(true)
               ->activateAccount();
 
         $admin->setPassword(
@@ -32,10 +30,8 @@ class UserFixtures extends Fixture
         // --- Driver User ---
         $driver = new User();
         $driver->setPhone('+237690000002')
-               ->setFirstName('Default')
-               ->setLastName('Driver')
+               ->setName('Default Driver')               
                ->setRoles(['ROLE_DRIVER'])
-               ->setIsEnabled(true)
                ->activateAccount();
 
         $driver->setPassword(
@@ -46,10 +42,8 @@ class UserFixtures extends Fixture
         // --- Client User ---
         $client = new User();
         $client->setPhone('+237690000003')
-               ->setFirstName('Test')
-               ->setLastName('Client')
+               ->setName('Test Client')               
                ->setRoles(['ROLE_USER'])
-               ->setIsEnabled(true)
                ->activateAccount();
 
         $client->setPassword(

@@ -525,6 +525,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->isEnabled === true;
     }
+    
+    public function setIsEnabled(bool $isEnabled): self
+    {
+        $this->isEnabled = $isEnabled;
+        return $this;
+    }
 
     // --- Reset Password Flow ---
     public function getResetPasswordCode(): ?string
