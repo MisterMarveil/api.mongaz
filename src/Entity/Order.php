@@ -24,8 +24,7 @@ use App\Action\Admin\ActivityLogs;
 use App\Repository\OrderRepository;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
-#[ApiResource(
-    openapiContext: ['security' => [['JWT' => []]]],    
+#[ApiResource(    
     operations: [
         new Post(
             name: 'admin_assign_driver',

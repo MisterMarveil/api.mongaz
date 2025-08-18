@@ -196,9 +196,7 @@ use App\Repository\DriverProfileRepository;
         )
     ],
     normalizationContext: ['groups' => ['driver:read']],
-    denormalizationContext: ['groups' => ['driver:write']],
-    openapiContext: ['security' => [['JWT' => []]]],
-    security: "is_granted('ROLE_DRIVER')"
+    denormalizationContext: ['groups' => ['driver:write']]
 )]
 class DriverProfile
 {

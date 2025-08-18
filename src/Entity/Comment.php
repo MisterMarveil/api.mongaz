@@ -11,8 +11,6 @@ use App\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ApiResource(
-    openapiContext: ['security' => [['JWT' => []]]],
-    security: "is_granted('ROLE_USER')",
     normalizationContext: ['groups' => ['comment:read']],
     denormalizationContext: ['groups' => ['comment:write']]
 )]

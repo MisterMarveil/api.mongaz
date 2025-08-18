@@ -14,12 +14,17 @@ final class JwtDecorator implements OpenApiFactoryInterface
     {
         $openApi = ($this->decorated)($context);
 
-        // Add Bearer security scheme
-        $openApi->getComponents()->getSecuritySchemes()['JWT'] = new ArrayObject([
+        $components = $openApi->getComponents();
+        $securitySchemes = $components->getSecuritySchemes();
+        $securitySchemes['JWT'] = new ArrayObject([
             'type' => 'http',
             'scheme' => 'bearer',
             'bearerFormat' => 'JWT',
         ]);
+        $components->setSecuritySchemes($securitySchemes);
+
+        // Apply JWT as default security globally
+        $openApi->getSecurity()->add(['JWT' => []]);
 
         return $openApi;
     }
