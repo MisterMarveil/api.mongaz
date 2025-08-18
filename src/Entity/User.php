@@ -25,6 +25,7 @@ use App\Action\User\VerifyActivationAction;
     operations: [
          new Post(
             name: 'password_reset_request', 
+            uriTemplate: '/users/request-password-reset',   
             controller: RequestPasswordResetAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
@@ -102,6 +103,7 @@ use App\Action\User\VerifyActivationAction;
         ),
         new Post(
             name: 'password_reset', 
+            uriTemplate: '/users/reset-password',
             controller: ResetPasswordAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
@@ -181,6 +183,7 @@ use App\Action\User\VerifyActivationAction;
         ),
         new Post(
             name: 'verification', 
+            uriTemplate: '/users/verify-activation',
             controller: VerifyActivationAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
@@ -272,6 +275,7 @@ use App\Action\User\VerifyActivationAction;
         ),
         new Post(
             name: 'resend_activation_code', 
+            uriTemplate: '/users/resend-activation',
             controller: ResendActivationAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
