@@ -31,6 +31,18 @@ use ApiPlatform\OpenApi\Model;
                     )
                 ]
             )
+        ),
+        new Get(
+            name: 'system_webhook_get',
+            routeName: 'system_webhook',
+            uriTemplate: '/system/webhook',
+            security: "is_granted('PUBLIC_ACCESS')"
+        ),
+        new Post(
+            name: 'system_webhook_post',
+            routeName: 'system_webhook',
+            uriTemplate: '/system/webhook',
+            security: "is_granted('PUBLIC_ACCESS')"
         )
     ]
 )]

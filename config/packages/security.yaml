@@ -1,45 +1,62 @@
 security:
-  password_hashers:
-    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    password_hashers:
+        # Uses auto algorithm (bcrypt or sodium depending on PHP version)
+        App\Entity\User:
+            algorithm: auto
 
-  role_hierarchy:
-    ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-    ROLE_ADMIN: [ROLE_USER]
-    ROLE_DRIVER: [ROLE_USER]
+    providers:
+        # Load user by phone (custom user provider still delegates to Doctrine)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: phone
 
-  providers:
-    app_user_provider:
-      entity:
-        class: App\Entity\User
-        property: phone   # <-- Use phone instead of username
+    firewalls:
+        # Disable security for dev/profiler
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
 
-  firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
+        # Public endpoints (login, token refresh, docs)
+        login:
+            pattern:  ^/api/login
+            stateless: true
+            json_login:
+                check_path:               /api/login
+                username_path:            phone     # use phone instead of username/email
+                password_path:            password
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
 
-    login:
-      pattern: ^/auth/login
-      stateless: true
-      json_login:
-        check_path: /auth/login
-        username_path: phone      # <-- Expect JSON { "phone": "...", "password": "..." }
-        password_path: password
-        success_handler: lexik_jwt_authentication.handler.authentication_success
-        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            security: false
 
-    refresh:
-      pattern: ^/auth/refresh
-      stateless: true
+        api:
+            pattern:   ^/api
+            stateless: true
+            provider:  app_user_provider
+            jwt:       ~
 
-    api:
-      pattern: ^/
-      stateless: true
-      jwt: ~
+        main:
+            lazy: true
+            provider: app_user_provider
+            logout: true
 
-  access_control:
-    - { path: ^/auth/login, roles: PUBLIC_ACCESS }
-    - { path: ^/auth/refresh, roles: PUBLIC_ACCESS }
-    - { path: ^/docs, roles: PUBLIC_ACCESS }
-    - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    access_control:
+        # Allow anonymous access to login + refresh
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+
+        # Allow API docs without auth
+        - { path: ^/docs, roles: PUBLIC_ACCESS }
+
+        # Admin restricted endpoints
+        - { path: ^/api/admin, roles: ROLE_ADMIN }
+
+        # Driver restricted endpoints
+        - { path: ^/api/driver, roles: ROLE_DRIVER }
+
+        # Default API endpoints require at least USER
+        - { path: ^/api, roles: ROLE_USER }
