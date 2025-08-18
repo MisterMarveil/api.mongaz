@@ -6,7 +6,9 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
-
+use App\Action\System\WebhookGetAction;
+use App\Action\System\WebhookPostAction;
+use App\Action\System\HealthCheck;
 
 #[ORM\Entity]
 #[ApiResource(    
@@ -14,7 +16,7 @@ use ApiPlatform\OpenApi\Model;
         new Get(
             name: 'system_health',
             uriTemplate: '/_health',            
-            routeName: 'system_health', 
+            controller: HealthCheck::class,
             openapi: new Model\Operation(
                 summary: 'Health check',
                 description: 'Returns API health status.',
@@ -37,9 +39,9 @@ use ApiPlatform\OpenApi\Model;
             )
         ),
         new Get(
-            name: 'system_webhook_get',
-            routeName: 'system_webhook_get',
-            uriTemplate: '/system/webhook1',
+            name: 'system_webhook_get',            
+            uriTemplate: '/system/webhook',
+            controller: WebhookGetAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Verification",
@@ -78,9 +80,9 @@ use ApiPlatform\OpenApi\Model;
             )
         ),
         new Post(
-            name: 'system_webhook_post',
-            routeName: 'system_webhook_post',
+            name: 'system_webhook_post',            
             uriTemplate: '/system/webhook',
+            controller: HealthCheck::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Receiver",
