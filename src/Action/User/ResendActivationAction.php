@@ -9,18 +9,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
+
+
 #[AsController]
-#[Route(
-    name: 'resend_activation',
-    path: '/api/users/resend-activation',
-    methods: ['POST'],
-    defaults: [
-        '_api_resource_class' => User::class,
-        '_api_operation_name' => 'resend-code',
-    ]
-)]
 class ResendActivationAction extends AbstractController
 {
+    #[Route(
+        name: 'resend_activation_code',
+        path: '/api/users/resend-activation',
+        methods: ['POST'],
+        defaults: [
+            '_api_resource_class' => User::class,
+            '_api_operation_name' => 'resend_activation_code',
+        ]
+    )]
     public function __invoke(Request $request, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
