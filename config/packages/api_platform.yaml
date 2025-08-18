@@ -5,6 +5,7 @@ api_platform:
         pagination_items_per_page: 20
         normalization_context: { groups: ['read'] }
         denormalization_context: { groups: ['write'] }
+        security: "is_granted('ROLE_USER')" # optional, default security
     formats:
         jsonld:  ['application/ld+json']
         json:    ['application/json']
@@ -15,8 +16,7 @@ api_platform:
     openapi:
         swagger_ui_extra_configuration:
             persistAuthorization: true
-    defaults:
-        security: "is_granted('ROLE_USER')" # optional, default security
+        
     # Expose JWT as a security scheme
     swagger:
         api_keys:
