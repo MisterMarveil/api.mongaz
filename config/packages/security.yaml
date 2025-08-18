@@ -47,10 +47,10 @@ security:
     access_control:
         # Allow anonymous access to login + refresh
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }        
 
         # Allow API docs without auth
-        - { path: ^/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
 
         # Admin restricted endpoints
         - { path: ^/api/admin, roles: ROLE_ADMIN }
