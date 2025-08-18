@@ -13,6 +13,10 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UserRepository;
 use ApiPlatform\OpenApi\Model;
+use App\Action\User\RequestPasswordResetAction;
+use App\Action\User\ResendActivationAction;
+use App\Action\User\ResetPasswordAction;
+use App\Action\User\VerifyActivationAction;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -21,7 +25,7 @@ use ApiPlatform\OpenApi\Model;
     operations: [
          new Post(
             name: 'password_reset_request', 
-            routeName: 'request_password_reset', 
+            controller: RequestPasswordResetAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: 'Request a reset password code',
@@ -98,7 +102,7 @@ use ApiPlatform\OpenApi\Model;
         ),
         new Post(
             name: 'password_reset', 
-            routeName: 'reset_password', 
+            controller: ResetPasswordAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: 'Reset password',
@@ -177,7 +181,7 @@ use ApiPlatform\OpenApi\Model;
         ),
         new Post(
             name: 'verification', 
-            routeName: 'verify_activation', 
+            controller: VerifyActivationAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                  summary: 'Verify and activate user account',
@@ -268,7 +272,7 @@ use ApiPlatform\OpenApi\Model;
         ),
         new Post(
             name: 'resend_activation_code', 
-            routeName: 'resend_activation_code', 
+            controller: ResetPasswordAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: 'Resend activation code',

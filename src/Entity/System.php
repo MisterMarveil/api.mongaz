@@ -1,7 +1,6 @@
 <?php
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
@@ -10,7 +9,6 @@ use App\Action\System\WebhookGetAction;
 use App\Action\System\WebhookPostAction;
 use App\Action\System\HealthCheck;
 
-#[ORM\Entity]
 #[ApiResource(    
     operations: [
         new Get(
@@ -82,7 +80,7 @@ use App\Action\System\HealthCheck;
         new Post(
             name: 'system_webhook_post',            
             uriTemplate: '/system/webhook',
-            controller: HealthCheck::class,
+            controller: WebhookPostAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Receiver",
