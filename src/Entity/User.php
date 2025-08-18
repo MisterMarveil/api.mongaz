@@ -272,7 +272,7 @@ use App\Action\User\VerifyActivationAction;
         ),
         new Post(
             name: 'resend_activation_code', 
-            controller: ResetPasswordAction::class,
+            controller: ResendActivationAction::class,
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: 'Resend activation code',
