@@ -24,10 +24,11 @@ final class ActivityLogs extends AbstractController
     )]
     public function __invoke(Request $request, EntityManagerInterface $em): JsonResponse
     {
-        $driverId = $request->query->get('driver_id');
-        $period   = $request->query->get('period');
+        $driverId = $request->query->get('driver_id');        
+        $from = new \DateTime($request->query->get('from'));
+        $to   = new \DateTime($request->query->get('to'));
 
-        $logs = $em->getRepository(Order::class)->findLogsForDriver($driverId, $period);
+        $logs = $em->getRepository(Order::class)->findLogsForDriver($driverId, $from, $to);
 
         return new JsonResponse(['logs' => $logs]);
     }

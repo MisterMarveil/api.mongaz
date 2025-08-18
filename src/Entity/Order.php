@@ -117,8 +117,8 @@ use App\Repository\OrderRepository;
                  summary: 'KPIs',
                 description: 'Retrieve system-wide KPIs for orders.',
                 parameters: [
-                    ['name' => 'from', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date']],
-                    ['name' => 'to', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date']]
+                    ['name' => 'from', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01'],
+                    ['name' => 'to', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01']
                 ],
                 responses: [
                     '200' => new Model\Response(
@@ -148,8 +148,9 @@ use App\Repository\OrderRepository;
                 summary: 'Driver activity logs',
                 description: 'Fetch activity logs for drivers within a period.',
                 parameters: [
-                    ['name' => 'driver_id', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'integer'], 'example' => '2025-01-01'],
-                    ['name' => 'period', 'in' => 'query', 'required' => false, 'schema' => ['type' => 'string'], 'example' => '2025-01-01']
+                    ['name' => 'driver_id', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'integer']],
+                    ['name' => 'from', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01'],
+                    ['name' => 'to', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01']
                 ],
                 responses: [
                     '200' => new Model\Response(description: 'Logs retrieved'),
