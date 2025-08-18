@@ -10,17 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
-#[Route(
-    name: 'request_password_reset',
-    path: '/api/users/request-password-reset',
-    methods: ['POST'],
-    defaults: [
-        '_api_resource_class' => User::class,
-        '_api_operation_name' => 'password_reset_request',
-    ]
-)]
 class RequestPasswordResetAction extends AbstractController
 {
+    #[Route(
+        name: 'request_password_reset',
+        path: '/api/users/request-password-reset',
+        methods: ['POST'],
+        defaults: [
+            '_api_resource_class' => User::class,
+            '_api_operation_name' => 'password_reset_request',
+        ]
+    )]
     public function __invoke(Request $request, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

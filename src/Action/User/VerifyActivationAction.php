@@ -10,17 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
-#[Route(
-    name: 'verify_activation',
-    path: '/api/users/verify-activation',
-    methods: ['POST'],
-    defaults: [
-        '_api_resource_class' => User::class,
-        '_api_operation_name' => 'verification',
-    ]
-)]
 class VerifyActivationAction extends AbstractController
 {
+    #[Route(
+        name: 'verify_activation',
+        path: '/api/users/verify-activation',
+        methods: ['POST'],
+        defaults: [
+            '_api_resource_class' => User::class,
+            '_api_operation_name' => 'verification',
+        ]
+    )]
     public function __invoke(Request $request, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
