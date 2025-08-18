@@ -39,7 +39,7 @@ use ApiPlatform\OpenApi\Model;
         new Get(
             name: 'system_webhook_get',
             routeName: 'system_webhook_get',
-            uriTemplate: '/system/webhook',
+            uriTemplate: '/system/webhook1',
             security: "is_granted('PUBLIC_ACCESS')",
             openapi: new Model\Operation(
                 summary: "Facebook Webhook Verification",
