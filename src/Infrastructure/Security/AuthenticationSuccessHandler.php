@@ -4,7 +4,7 @@ namespace App\Infrastructure\Security;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use App\Entity\User;
 
-class AuthenticationSuccessListener
+class AuthenticationSuccessHandler
 {
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event): void
     {
