@@ -2,10 +2,10 @@ _security_logout:
     resource: security.route_loader.logout
     type: service
 login:
-    path: /auth/login
+    path: /api/login
     methods: [POST]
 
 gesdinet_jwt_refresh_token:
-    path: /auth/refresh
+    path: /api/token/refresh
     controller: gesdinet.jwtrefreshtoken::refresh
     methods: [POST]
