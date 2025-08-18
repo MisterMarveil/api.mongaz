@@ -1,12 +1,14 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
 
 
+#[ORM\Entity]
 #[ApiResource(    
     operations: [
         new Get(
