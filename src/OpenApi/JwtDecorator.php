@@ -24,7 +24,9 @@ final class JwtDecorator implements OpenApiFactoryInterface
         $components->withSecuritySchemes($securitySchemes);
 
         // Apply JWT as default security globally
-        $openApi->getSecurity()->add(['JWT' => []]);
+        $security = $openApi->getSecurity();
+        $security[] = ['JWT' => []];
+        $openApi = $openApi->withSecurity($security);
 
         return $openApi;
     }
