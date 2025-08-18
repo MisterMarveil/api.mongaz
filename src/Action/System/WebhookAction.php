@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[Route(
     path: '/api/system/webhook',
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
         '_api_operation_name' => 'system_webhook'
     ]
 )]
+#[AsController]
 final class WebhookAction
 {
     public function __invoke(Request $request): Response
