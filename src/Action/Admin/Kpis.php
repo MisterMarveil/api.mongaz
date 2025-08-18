@@ -24,10 +24,11 @@ final class Kpis extends AbstractController
     )]
     public function __invoke(Request $request, EntityManagerInterface $em): JsonResponse
     {
+        $driverId = $request->query->get('driver_id');        
         $from = new \DateTime($request->query->get('from'));
         $to   = new \DateTime($request->query->get('to'));
 
-        $stats = $em->getRepository(Order::class)->computeKpis($from, $to);
+        $stats = $em->getRepository(Order::class)->computeKpis($driverId, $from, $to);
 
         return new JsonResponse($stats);
     }

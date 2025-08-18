@@ -56,10 +56,9 @@ class OrderRepository extends ServiceEntityRepository
      * @param \DateTimeImmutable $to
      * @return array
      */
-    public function computeKpis(\DateTimeImmutable $from, \DateTimeImmutable $to): array
+    public function computeKpis(?int $driverId, \DateTimeImmutable $from, \DateTimeImmutable $to): array
     {
         $conn = $this->getEntityManager()->getConnection();
-
         $sql = "
             SELECT 
                 COUNT(*) as total_orders,
@@ -69,11 +68,18 @@ class OrderRepository extends ServiceEntityRepository
             WHERE created_at BETWEEN :from AND :to
         ";
 
-        $stmt = $conn->prepare($sql);
-        $result = $stmt->executeQuery([
+        $params = [
             'from' => $from->format('Y-m-d 00:00:00'),
             'to'   => $to->format('Y-m-d 23:59:59'),
-        ])->fetchAssociative();
+        ];
+
+        if ($driverId !== null) {
+            $sql .= " AND driver_id = :driverId";
+            $params['driverId'] = $driverId;
+        }
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery($params)->fetchAssociative();
 
         return [
             'total_orders' => (int) ($result['total_orders'] ?? 0),

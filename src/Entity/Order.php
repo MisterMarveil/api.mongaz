@@ -115,8 +115,9 @@ use App\Repository\OrderRepository;
             controller: Kpis::class,
              openapi: new Model\Operation(
                  summary: 'KPIs',
-                description: 'Retrieve system-wide KPIs for orders.',
+                description: 'Retrieve system-wide (or for a specific driver if provided) KPIs for orders.',
                 parameters: [
+                    ['name' => 'driver_id', 'in' => 'query', 'required' => false, 'schema' => ['type' => 'integer']],
                     ['name' => 'from', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01'],
                     ['name' => 'to', 'in' => 'query', 'required' => true, 'schema' => ['type' => 'string', 'format' => 'date'], 'example' => '2025-01-01']
                 ],
