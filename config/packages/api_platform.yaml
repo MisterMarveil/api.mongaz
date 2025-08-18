@@ -10,3 +10,18 @@ api_platform:
         json:    ['application/json']
     swagger:
         versions: [3]
+    swagger_ui_extra_configuration:
+        persistAuthorization: true  # keeps token in Swagger UI
+    openapi:
+        swagger_ui_extra_configuration:
+            persistAuthorization: true
+    defaults:
+        security: "is_granted('ROLE_USER')" # optional, default security
+    # Expose JWT as a security scheme
+    swagger:
+        api_keys:
+            bearer:
+                name: Authorization
+                type: http
+                scheme: bearer
+                bearerFormat: JWT
