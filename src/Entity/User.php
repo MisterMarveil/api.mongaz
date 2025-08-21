@@ -17,6 +17,7 @@ use App\Action\User\RequestPasswordResetAction;
 use App\Action\User\ResendActivationAction;
 use App\Action\User\ResetPasswordAction;
 use App\Action\User\VerifyActivationAction;
+use App\Action\User\VerifyResetPasswordCode;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -351,6 +352,87 @@ use App\Action\User\VerifyActivationAction;
                 ]
             )
         ),
+        new Post(
+            name: 'verify_reset_password_code',
+            uriTemplate: '/users/verify-reset-password-code',
+            controller: VerifyResetPasswordCode::class,
+            security: "is_granted('PUBLIC_ACCESS')",
+            openapi: new Model\Operation(
+                summary: 'Verify reset password code',
+                description: 'Verify that a reset password code is valid for a user',
+                requestBody: new Model\RequestBody(
+                    content: new \ArrayObject([
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'phone' => ['type' => 'string'],
+                                    'code' => ['type' => 'string']
+                                ]
+                            ],
+                            'example' => [
+                                'phone' => '+237691919116',
+                                'code' => '123456'
+                            ]
+                        ]
+                    ])
+                ),
+                responses: [
+                    '200' => new Model\Response(
+                        description: 'Code verified successfully',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'status' => ['type' => 'string']
+                                    ]
+                                ]
+                            ]
+                        ])
+                    ),
+                    '400' => new Model\Response(
+                        description: 'Missing params or no reset code found',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'error' => ['type' => 'string']
+                                    ]
+                                ]
+                            ]
+                        ])
+                    ),
+                    '401' => new Model\Response(
+                        description: 'Invalid or expired code',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'error' => ['type' => 'string']
+                                    ]
+                                ]
+                            ]
+                        ])
+                    ),
+                    '404' => new Model\Response(
+                        description: 'User not found',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'error' => ['type' => 'string']
+                                    ]
+                                ]
+                            ]
+                        ])
+                    )
+                ]
+            )
+        ),
         new Get(security: "is_granted('ROLE_ADMIN') or object == user"),
         new GetCollection(security: "is_granted('ROLE_ADMIN')"),
         new Post(security: "is_granted('ROLE_ADMIN')")
@@ -386,7 +468,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Groups(['user:read'])]
-    private ?bool $isActive = true;
+    private ?bool $isActive = false;
 
     #[ORM\Column]
     #[Groups(['user:read'])]
