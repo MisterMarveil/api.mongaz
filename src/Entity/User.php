@@ -456,6 +456,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $phone;
 
     #[ORM\Column]
+    #[Groups(['user:read'])]
     private array $roles = [];
 
     #[ORM\Column]
@@ -471,7 +472,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActive = false;
 
     #[ORM\Column]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read'])]    
     private ?bool $isEnabled = false;
 
     #[ORM\Column(nullable: true)]
