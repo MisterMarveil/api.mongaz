@@ -47,6 +47,7 @@ security:
     access_control:
         # Allow anonymous access to login + refresh
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/_health, roles: PUBLIC_ACCESS }
         - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }        
 
         # Allow API docs without auth
