@@ -118,10 +118,10 @@ use App\Action\User\VerifyResetPasswordCode;
                                 'type' => 'object',
                                 'properties' => [
                                     'phone' => ['type' => 'string', 'example' => '+237691919116'],
-                                    'code' => ['type' => 'string', 'example' => '123456'],
+                                    'reset_code' => ['type' => 'string', 'example' => '123456'],
                                     'newPassword' => ['type' => 'string', 'example' => 'newSecretPass']
                                 ],
-                                'required' => ['phone', 'code', 'newPassword']
+                                'required' => ['phone', 'reset_code', 'newPassword']
                             ]
                         ]
                     ])

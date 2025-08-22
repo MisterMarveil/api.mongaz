@@ -29,7 +29,7 @@ class ResetPasswordAction extends AbstractController
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
         $phone = $data['phone'] ?? null;
-        $code = $data['code'] ?? null;
+        $code = $data['reset_code'] ?? null;
         $newPassword = $data['newPassword'] ?? null;
 
         if (!$phone || !$code || !$newPassword) {
