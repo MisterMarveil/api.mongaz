@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
               ->activateAccount();
 
         $admin->setPassword(
-            $this->passwordHasher->hashPassword($admin, 'admin123')
+            $this->passwordHasher->hashPassword($admin, '123456')
         );
         $manager->persist($admin);
 
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
                ->activateAccount();
 
         $driver->setPassword(
-            $this->passwordHasher->hashPassword($driver, 'driver123')
+            $this->passwordHasher->hashPassword($driver, '123456')
         );
         $manager->persist($driver);
 
@@ -47,7 +47,7 @@ class UserFixtures extends Fixture
                ->activateAccount();
 
         $client->setPassword(
-            $this->passwordHasher->hashPassword($client, 'client123')
+            $this->passwordHasher->hashPassword($client, '123456')
         );
         $manager->persist($client);
 
