@@ -15,6 +15,7 @@ use App\Entity\DriverProfile;
 use App\Entity\User;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\OpenApi\Model;
 use App\Action\Admin\AssignDriver;
 use App\Action\Admin\CancelOrder;
