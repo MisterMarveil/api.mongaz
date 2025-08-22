@@ -159,7 +159,10 @@ use App\Repository\OrderRepository;
                 ]
             ),
             security: "is_granted('ROLE_ADMIN')"
-        )        
+        ),
+        new Get(security: "is_granted('ROLE_ADMIN')"),
+        new GetCollection(security: "is_granted('ROLE_ADMIN')"),
+        new Post(security: "is_granted('ROLE_ADMIN')")        
     ],
     normalizationContext: ['groups' => ['order:read']],
     denormalizationContext: ['groups' => ['order:write']]
