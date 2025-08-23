@@ -25,6 +25,7 @@ use App\Action\Admin\ActivityLogs;
 use App\Repository\OrderRepository;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Table(name: '`orders`')]  // Use backticks to escape the table name
 #[ApiResource(    
     operations: [
         new Post(
