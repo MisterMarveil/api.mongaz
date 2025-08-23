@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 #[AsController]
 final class HealthCheck extends AbstractController
@@ -21,8 +23,20 @@ final class HealthCheck extends AbstractController
             '_api_operation_name' => 'system_health',
         ]
     )]
-    public function __invoke(): JsonResponse
+    public function __invoke(HubInterface $hub): JsonResponse    
     {
+        //checking sse server health
+        $update = new Update(
+            'health_check',
+            json_encode(['status' => 'test', 'timestamp' => time()])
+        );
+    
+        try {
+             $hub->publish($update);            
+        } catch (\Exception $e) {
+            return new JsonResponse(['status' => 'sse server health error', 'message' => $e->getMessage()]);
+        }
+
         return new JsonResponse(['status' => 'ok', 'time' => date('c')]);
     }
 }

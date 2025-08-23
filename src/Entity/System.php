@@ -8,6 +8,7 @@ use ApiPlatform\OpenApi\Model;
 use App\Action\System\WebhookGetAction;
 use App\Action\System\WebhookPostAction;
 use App\Action\System\HealthCheck;
+use App\Action\System\PublishNotification;
 
 #[ApiResource(    
     operations: [
