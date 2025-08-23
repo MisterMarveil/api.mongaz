@@ -165,6 +165,71 @@ use App\Action\System\HealthCheck;
                     )
                 ]
             )        
+        ),
+        new Post(
+            name: 'system_notify',
+            uriTemplate: '/system/notify',
+            controller: PublishNotification::class,
+            security: "is_granted('ROLE_USER')",
+            openapi: new Model\Operation(
+                summary: 'Publish SSE notification',
+                description: 'Publish notifications via Mercure hub, targeting roles or users.',
+                requestBody: new Model\RequestBody(
+                    content: new \ArrayObject([
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'message' => ['type' => 'string'],
+                                    'role' => ['type' => 'string'],
+                                    'userIds' => [
+                                        'type' => 'array',
+                                        'items' => ['type' => 'string', 'format' => 'uuid']
+                                    ]
+                                ],
+                                'required' => ['message']
+                            ],
+                            'example' => [
+                                'message' => 'New order assigned!',
+                                'role' => 'ROLE_DRIVER',
+                                'userIds' => ['uuid-1234', 'uuid-5678']
+                            ]
+                        ]
+                    ])
+                ),
+                responses: [
+                    '200' => new Model\Response(
+                        description: 'Notification published successfully',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'status' => ['type' => 'string'],
+                                        'topics' => [
+                                            'type' => 'array',
+                                            'items' => ['type' => 'string']
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ])
+                    ),
+                    '400' => new Model\Response(
+                        description: 'Invalid request (e.g. missing message)',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => [
+                                        'error' => ['type' => 'string']
+                                    ]
+                                ]
+                            ]
+                        ])
+                    )
+                ]
+            )
         )
     ]
 )]
