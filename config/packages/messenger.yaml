@@ -1,22 +1,40 @@
 framework:
-    messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+  messenger:
+    transports:
+      # Main async transport for notifications
+      async_notify:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          auto_setup: true
+          exchange:
+            name: 'mongaz.notifications'
+            type: direct
+            durable: true
+          queues:
+            mongaz.notifications:
+              binding_keys: ['mongaz.notifications']  # direct exchange routing key
+              durable: true
+        retry_strategy:
+          max_retries: 5
+          delay: 1000          # 1s
+          multiplier: 2
+          max_delay: 60000     # 60s
 
-        transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+      # Optional: a dead-letter queue (enable if you want)
+      # failed_notify:
+      #   dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+      #   options:
+      #     auto_setup: true
+      #     exchange:
+      #       name: 'mongaz.notifications.failed'
+      #       type: direct
+      #       durable: true
+      #     queues:
+      #       mongaz.notifications.failed:
+      #         durable: true
 
-        routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+    # failure_transport: failed_notify   # uncomment if you enabled it
 
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
+   routing:
+     # Route our message class to RabbitMQ
+     'App\Message\NotificationMessage': async_notify
