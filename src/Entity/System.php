@@ -173,8 +173,8 @@ use App\Action\System\PublishNotification;
             controller: PublishNotification::class,
             security: "is_granted('ROLE_USER')",
             openapi: new Model\Operation(
-                summary: 'Publish SSE notification',
-                description: 'Publish notifications via Mercure hub, targeting roles or users.',
+                summary: 'Queue SSE notification via RabbitMQ',
+                description: 'Queues a notification which will be published to Mercure by a worker.',
                 requestBody: new Model\RequestBody(
                     content: new \ArrayObject([
                         'application/json' => [
@@ -182,25 +182,29 @@ use App\Action\System\PublishNotification;
                                 'type' => 'object',
                                 'properties' => [
                                     'message' => ['type' => 'string'],
-                                    'role' => ['type' => 'string'],
+                                    'event' => ['type' => 'string', 'example' => 'order.assigned'],
+                                    'role' => ['type' => 'string', 'example' => 'ROLE_DRIVER'],
                                     'userIds' => [
                                         'type' => 'array',
                                         'items' => ['type' => 'string', 'format' => 'uuid']
-                                    ]
+                                    ],
+                                    'extra' => ['type' => 'object']
                                 ],
                                 'required' => ['message']
                             ],
                             'example' => [
                                 'message' => 'New order assigned!',
+                                'event' => 'order.assigned',
                                 'role' => 'ROLE_DRIVER',
-                                'userIds' => ['uuid-1234', 'uuid-5678']
+                                'userIds' => ['c1f5d5d8-8f2e-4c0c-b6a8-efb80c2d1d0a'],
+                                'extra' => ['orderId' => 1234]
                             ]
                         ]
                     ])
                 ),
                 responses: [
-                    '200' => new Model\Response(
-                        description: 'Notification published successfully',
+                    '202' => new Model\Response(
+                        description: 'Message queued',
                         content: new \ArrayObject([
                             'application/json' => [
                                 'schema' => [
@@ -212,12 +216,16 @@ use App\Action\System\PublishNotification;
                                             'items' => ['type' => 'string']
                                         ]
                                     ]
+                                ],
+                                'example' => [
+                                    'status' => 'queued',
+                                    'topics' => ['system:role:ROLE_DRIVER', 'system:user:c1f5...']
                                 ]
                             ]
                         ])
                     ),
                     '400' => new Model\Response(
-                        description: 'Invalid request (e.g. missing message)',
+                        description: 'Invalid request (missing message)',
                         content: new \ArrayObject([
                             'application/json' => [
                                 'schema' => [
@@ -225,7 +233,8 @@ use App\Action\System\PublishNotification;
                                     'properties' => [
                                         'error' => ['type' => 'string']
                                     ]
-                                ]
+                                ],
+                                'example' => ['error' => 'Message is required']
                             ]
                         ])
                     )
@@ -234,4 +243,4 @@ use App\Action\System\PublishNotification;
         )
     ]
 )]
-class System {}
+final class System {}

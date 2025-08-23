@@ -1,24 +1,20 @@
 <?php
+
 namespace App\Action\System;
 
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
-use App\Entity\System;
+use App\Entity\System; // your "fake" ApiResource class namespace
+use App\Message\NotificationMessage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
-class PublishNotification
+final class PublishNotification
 {
-    private HubInterface $hub;
-
-    public function __construct(HubInterface $hub)
-    {
-        $this->hub = $hub;
-    }
+    public function __construct(private MessageBusInterface $bus) {}
 
     #[Route(
         path: '/api/system/notify',
@@ -32,50 +28,47 @@ class PublishNotification
     #[IsGranted('ROLE_USER')]
     public function __invoke(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data    = json_decode($request->getContent(), true) ?? [];
         $message = $data['message'] ?? null;
-        $role    = $data['role'] ?? null;
-        $userIds = $data['userIds'] ?? [];
-        $topic   = $data['topic'] ?? 'user';
+        $role    = $data['role'] ?? null;            // ex: ROLE_DRIVER
+        $userIds = $data['userIds'] ?? [];           // array of user UUIDs
+        $event   = $data['event'] ?? null;           // ex: "order.assigned"
+        $extra   = $data['extra'] ?? [];             // arbitrary payload keys
 
         if (!$message) {
             return new JsonResponse(['error' => 'Message is required'], 400);
         }
 
+        // --- Topic naming protocol ---
+        // Global:           system:all
+        // Role-based:       system:role:{ROLE}
+        // User-specific:    system:user:{uuid}
+        // Entity-specific:  system:entity:{name}:{id}  (future use)
         $topics = [];
-
-        // Consistent naming protocol
         if ($role) {
             $topics[] = "system:role:{$role}";
         }
-
         if (!empty($userIds)) {
             foreach ($userIds as $uuid) {
                 $topics[] = "system:user:{$uuid}";
             }
         }
-
-        // Default global notification
         if (!$role && empty($userIds)) {
-            $topics[] = "system:all";
+            $topics[] = 'system:all';
         }
 
-        // Publish to Mercure hub
-        foreach ($topics as $t) {
-            $update = new Update(
-                $t,
-                json_encode([
-                    'topic' => $t,
-                    'message' => $message,
-                    'timestamp' => (new \DateTimeImmutable())->format(DATE_ATOM)
-                ])
-            );
-            $this->hub->publish($update);
-        }
+        // Construct payload
+        $payload = array_merge([
+            'message' => $message,
+        ], $extra);
 
+        // Dispatch to the bus (async via RabbitMQ)
+        $this->bus->dispatch(new NotificationMessage($topics, $payload, $event));
+
+        // 202: request accepted / queued
         return new JsonResponse([
-            'status' => 'Notification published',
-            'topics' => $topics
-        ], 200);
+            'status' => 'queued',
+            'topics' => $topics,
+        ], 202);
     }
 }
