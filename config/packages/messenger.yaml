@@ -17,6 +17,7 @@ framework:
           delay: 1000
           multiplier: 2
           max_delay: 60000
+
       failed_notify:
         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
         options:
@@ -28,5 +29,39 @@ framework:
           queues:
             mongaz.notifications.failed:
               binding_keys: ['mongaz.notifications.failed']
+
+      async_order_updated:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          auto_setup: true
+          persistent: true
+          exchange:
+            name: 'mongaz.order_updated'
+            type: direct
+          queues:
+            mongaz.order_updated:
+              binding_keys: ['mongaz.order_updated']
+        retry_strategy:
+          max_retries: 5
+          delay: 1000
+          multiplier: 2
+          max_delay: 60000
+
+      failed_order_updated:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          auto_setup: true
+          persistent: true
+          exchange:
+            name: 'mongaz.order_updated.failed'
+            type: direct
+          queues:
+            mongaz.order_updated.failed:
+              binding_keys: ['mongaz.order_updated.failed']
+
     routing:
+      # Notification messages go to async_notify
       'App\Message\NotificationMessage': async_notify
+
+      # Order updated messages go to async_order_updated
+      'App\Message\OrderUpdatedMessage': async_order_updated

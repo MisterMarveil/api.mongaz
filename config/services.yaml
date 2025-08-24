@@ -30,3 +30,7 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: [ '@App\OpenApi\JwtDecorator.inner' ]
         autoconfigure: false
+
+    App\EventSubscriber\OrderUpdatedEventSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }

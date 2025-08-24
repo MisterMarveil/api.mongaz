@@ -4,14 +4,10 @@ namespace App\Action\System;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use App\Entity\System;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Messenger\Transport\TransportInterface;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
-use Firebase\JWT\JWT;
 
 
 #[AsController]
@@ -26,7 +22,7 @@ final class HealthCheck extends AbstractController
             '_api_operation_name' => 'system_health',
         ]
     )]
-    public function __invoke(HubInterface $hub, TransportInterface $asyncOrdersTransport): JsonResponse    
+    public function __invoke(HubInterface $hub): JsonResponse    
     {
 
         //checking sse server health
@@ -39,18 +35,6 @@ final class HealthCheck extends AbstractController
              $hub->publish($update);            
         } catch (\Exception $e) {
             return new JsonResponse(['status' => 'sse server health error', 'message' => $e->getCode()."-".$e->getMessage()]);
-        }
-
-        //checking rabbitmq server 
-        try {
-            // Peek at the queue without consuming
-            $this->asyncOrdersTransport->get(); 
-        } catch (\Throwable $e) {
-            return new JsonResponse([
-                'status' => 'error',
-                'rabbitmq' => false,
-                'message' => $e->getMessage(),
-            ], 503);
         }
 
         return new JsonResponse(['status' => 'ok', 'time' => date('c')]);
