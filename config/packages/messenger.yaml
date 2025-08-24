@@ -1,40 +1,32 @@
 framework:
   messenger:
     transports:
-      # Main async transport for notifications
       async_notify:
         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
         options:
           auto_setup: true
+          persistent: true
           exchange:
             name: 'mongaz.notifications'
             type: direct
-            durable: true
           queues:
             mongaz.notifications:
-              binding_keys: ['mongaz.notifications']  # direct exchange routing key
-              durable: true
+              binding_keys: ['mongaz.notifications']
         retry_strategy:
           max_retries: 5
-          delay: 1000          # 1s
+          delay: 1000
           multiplier: 2
-          max_delay: 60000     # 60s
-
-      # Optional: a dead-letter queue (enable if you want)
-      # failed_notify:
-      #   dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-      #   options:
-      #     auto_setup: true
-      #     exchange:
-      #       name: 'mongaz.notifications.failed'
-      #       type: direct
-      #       durable: true
-      #     queues:
-      #       mongaz.notifications.failed:
-      #         durable: true
-
-    # failure_transport: failed_notify   # uncomment if you enabled it
-
-   routing:
-     # Route our message class to RabbitMQ
-     'App\Message\NotificationMessage': async_notify
+          max_delay: 60000
+      failed_notify:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          auto_setup: true
+          persistent: true
+          exchange:
+            name: 'mongaz.notifications.failed'
+            type: direct
+          queues:
+            mongaz.notifications.failed:
+              binding_keys: ['mongaz.notifications.failed']
+    routing:
+      'App\Message\NotificationMessage': async_notify

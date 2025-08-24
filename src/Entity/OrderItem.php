@@ -33,6 +33,9 @@ class OrderItem
     #[Groups(['order:read', 'order:write'])]
     private int $quantity;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pickupAddress = null;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -79,6 +82,18 @@ class OrderItem
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+        return $this;
+    }
+
+    public function getPickupAddress(): ?string
+    {
+        return $this->pickupAddress;
+    }
+
+    public function setPickupAddress(?string $pickupAddress): static
+    {
+        $this->pickupAddress = $pickupAddress;
+
         return $this;
     }
 }
