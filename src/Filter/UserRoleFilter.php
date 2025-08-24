@@ -5,6 +5,7 @@ use ApiPlatform\Doctrine\Orm\Filter\AbstractFilter;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\PropertyInfo\Type;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Metadata\Operation;
 
 class UserRoleFilter extends AbstractFilter
 {
@@ -14,7 +15,8 @@ class UserRoleFilter extends AbstractFilter
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
-        string $operationName = null
+        ?Operation $operation = null,
+        array $context = []
     ): void {
         if ($property !== 'role' || $value === null) {
             return;
