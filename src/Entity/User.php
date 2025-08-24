@@ -18,7 +18,9 @@ use App\Action\User\ResendActivationAction;
 use App\Action\User\ResetPasswordAction;
 use App\Action\User\VerifyActivationAction;
 use App\Action\User\VerifyResetPasswordCode;
-
+use App\Filter\UserRoleFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -440,6 +442,10 @@ use App\Action\User\VerifyResetPasswordCode;
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'phone' => 'partial'  // keep phone filter
+])]
+#[ApiFilter(UserRoleFilter::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
