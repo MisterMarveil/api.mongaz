@@ -34,6 +34,7 @@ class OrderItem
     private int $quantity;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['order:read', 'order:write'])]
     private ?string $pickupAddress = null;
 
     public function getId(): ?Uuid
