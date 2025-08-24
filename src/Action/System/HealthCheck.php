@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
+use Firebase\JWT\JWT;
+
 
 #[AsController]
 final class HealthCheck extends AbstractController
@@ -25,6 +27,7 @@ final class HealthCheck extends AbstractController
     )]
     public function __invoke(HubInterface $hub): JsonResponse    
     {
+
         //checking sse server health
         $update = new Update(
             'health_check',
@@ -34,7 +37,7 @@ final class HealthCheck extends AbstractController
         try {
              $hub->publish($update);            
         } catch (\Exception $e) {
-            return new JsonResponse(['status' => 'sse server health error', 'message' => $e->getMessage()]);
+            return new JsonResponse(['status' => 'sse server health error', 'message' => $e->getCode()."-".$e->getMessage()]);
         }
 
         return new JsonResponse(['status' => 'ok', 'time' => date('c')]);
