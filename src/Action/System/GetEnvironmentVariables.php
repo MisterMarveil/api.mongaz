@@ -13,7 +13,8 @@ class GetEnvironmentVariables extends AbstractController
 {
     private array $allowedParameters = [
         'MAPBOX_TOKEN',
-        'MERCURE_SUBSCRIBER_TOKEN'
+        'MERCURE_SUBSCRIBER_TOKEN',
+        'MERCURE_SSE_URL'
     ];
 
 
