@@ -9,6 +9,7 @@ use App\Action\System\WebhookGetAction;
 use App\Action\System\WebhookPostAction;
 use App\Action\System\HealthCheck;
 use App\Action\System\PublishNotification;
+use App\Action\System\GetEnvironmentVariables;
 
 #[ApiResource(    
     operations: [
@@ -77,6 +78,50 @@ use App\Action\System\PublishNotification;
                     )
                 ]
             )
+        ),
+        new Get(
+            name: 'get_env_vars',
+            uriTemplate: '/system/env-vars',
+            controller: GetEnvironmentVariables::class,
+            openapi: new Model\Operation(
+                summary: 'Get whitelisted environment variables',
+                description: 'Return selected environment variables from a whitelist (like API keys) for authenticated users.',
+                parameters: [
+                    [
+                        'name' => 'names[]',
+                        'in' => 'query',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'array',
+                            'items' => ['type' => 'string'],
+                        ],
+                        'style' => 'form',
+                        'explode' => true,
+                        'example' => ['MAPBOX_TOKEN', 'GOOGLE_TOKEN']
+                    ]
+                ],
+                responses: [
+                    '200' => new Model\Response(
+                        description: 'Environment variables result',
+                        content: new \ArrayObject([
+                            'application/json' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'additionalProperties' => ['type' => 'string']
+                                ],
+                                'example' => [
+                                    'MAPBOX_TOKEN' => 'pk.test-mapbox-token',
+                                    'GOOGLE_TOKEN' => 'AIza.test-google-token'
+                                ]
+                            ]
+                        ])
+                    ),
+                    '403' => new Model\Response(
+                        description: 'Access denied'
+                    )
+                ]
+            ),
+            security: "is_granted('ROLE_USER')"
         ),
         new Post(
             name: 'system_webhook_post',            

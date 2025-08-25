@@ -437,7 +437,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
         ),
         new Get(security: "is_granted('ROLE_ADMIN') or object == user"),
         new GetCollection(security: "is_granted('ROLE_ADMIN')"),
-        new Post(security: "is_granted('ROLE_ADMIN')")
+        new Post(security: "is_granted('ROLE_SUPER_ADMIN')")
     ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]

@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
         $admin = new User();
         $admin->setPhone('+237690000001')
               ->setName('System Admin')              
-              ->setRoles(['ROLE_ADMIN'])
+              ->setRoles(['ROLE_ADMIN','ROLE_SUPER_ADMIN'])
               ->activateAccount();
 
         $admin->setPassword(
