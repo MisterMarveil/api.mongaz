@@ -24,11 +24,10 @@ class UserRoleFilter extends AbstractFilter
 
         $alias = $queryBuilder->getRootAliases()[0];
         $parameterName = $queryNameGenerator->generateParameterName($property);
-
-        // Use MySQL JSON_CONTAINS to check if role exists in JSON array
-        $queryBuilder
-            ->andWhere(sprintf("JSON_CONTAINS(%s.roles, :%s) = 1", $alias, $parameterName))
-            ->setParameter($parameterName, json_encode($value));
+        
+        
+        $queryBuilder->andWhere(sprintf("JSON_CONTAINS(%s.roles, :%s) = 1", $alias, $parameterName))
+                    ->setParameter($parameterName, json_encode($value));
     }
 
     public function getDescription(string $resourceClass): array
