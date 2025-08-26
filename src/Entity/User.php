@@ -474,10 +474,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Groups(['user:read'])]
-    private ?bool $isActive = false;
-
-    #[ORM\Column]
     #[Groups(['user:read'])]    
     private ?bool $isEnabled = false;
 
@@ -616,6 +612,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->activationCode = null;
         $this->activationCodeExpiresAt = null;
         return $this;
+    }
+
+     public function getEnabledAt(): ?\DateTimeImmutable{
+        return $this->enabledAt;
+    }
+
+
+    public function getIsEnabled(): bool{
+        return $this->isEnabled === true;
     }
 
     public function isEnabled(): bool
