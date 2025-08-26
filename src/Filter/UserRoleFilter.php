@@ -18,7 +18,7 @@ class UserRoleFilter extends AbstractFilter
         ?Operation $operation = null,
         array $context = []
     ): void {
-        if ($property !== 'role' || $value === null) {
+        if ($property !== 'role' || $value === null || empty($value)) {
             return;
         }
 
