@@ -26,11 +26,13 @@ class PointOfSale
 
     #[ORM\Column(length: 255)]
     #[Groups(['pos:read', 'pos:write'])]
-    private string $address;
+    private string $address = "";
 
+    #[Groups(['pos:read', 'pos:write'])]
     #[ORM\Column(type: 'decimal', precision: 10, scale: 7)]
     private string $lat;
 
+    #[Groups(['pos:read', 'pos:write'])]
     #[ORM\Column(type: 'decimal', precision: 10, scale: 7)]
     private string $lon;
 
