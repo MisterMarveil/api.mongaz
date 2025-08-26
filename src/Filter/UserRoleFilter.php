@@ -39,7 +39,7 @@ class UserRoleFilter extends AbstractFilter
                 'required' => false,
                 'description' => 'Filter users by role (must exactly match a role in the roles JSON array)',
                 'openapi' => [
-                    'example' => 'ROLE_DRIVER'
+                    'example' => 'ROLE_USER'
                 ]
             ],
         ];
