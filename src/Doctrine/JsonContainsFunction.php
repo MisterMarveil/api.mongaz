@@ -13,7 +13,6 @@ class JsonContainsFunction extends FunctionNode
 
     public function parse(Parser $parser): void
     {
-        $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
 
         $this->jsonField = $parser->ArithmeticPrimary();
