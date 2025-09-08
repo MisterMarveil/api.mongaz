@@ -224,6 +224,16 @@ class Order
     #[ORM\Column]
     private \DateTime $updatedAt;
 
+    #[ORM\Column(length: 32)]
+    #[Assert\NotBlank]
+    #[Groups(['order:read', 'order:write'])]
+    private ?string $lat = null;
+
+    #[ORM\Column(length: 32)]
+    #[Assert\NotBlank]
+    #[Groups(['order:read', 'order:write'])]
+    private ?string $lon = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -371,6 +381,30 @@ class Order
     public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(string $addressLat): static
+    {
+        $this->lat = $addressLat;
+
+        return $this;
+    }
+
+    public function getLon(): ?string
+    {
+        return $this->lon;
+    }
+
+    public function setLon(string $addressLon): static
+    {
+        $this->lon = $addressLon;
+
         return $this;
     }
 }
